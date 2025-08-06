@@ -3,7 +3,9 @@ title: "Fra null til koding"
 subtitle: "Programmering med Python"
 format:
     revealjs:
-        theme: moon
+        theme: default
+        width: 1920
+        height: 1200
 ---
 
 ## Python
