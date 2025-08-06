@@ -29,6 +29,8 @@
               numpy
               pandas
               great-tables
+              xlsxwriter
+              fastexcel
             ]
           );
         in

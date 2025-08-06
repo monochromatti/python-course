@@ -4,8 +4,8 @@ subtitle: "Programmering med Python"
 format:
     revealjs:
         theme: default
-        width: 1920
-        height: 1200
+        width: 1200
+        height: 800
 ---
 
 ## Python
@@ -17,10 +17,42 @@ format:
 - Limspråk
   - Gir tilgang til toppmoderne programvare
 
-## Eksempler
-### Automatisering
+## Eksempel: automatisering
+```{python}
+import polars as pl
+from great_tables import GT, style, loc
+
+df = pl.read_excel("data/sales.xlsx")
+
+table = GT(df).tab_options(table_body_vlines_style="solid")
+display(table)
+```
+
+##
+```{.python code-line-numbers="1|3|4-8"}
+import polars as pl
+
+sales_data = pl.read_excel("sales.xlsx")
+sales_summary = sales_data.group_by('salesperson').agg(
+    pl.col('amount').sum().alias('total_sales'),
+    pl.col('amount').count().alias('num_sales'),
+    pl.col('amount').mean().alias('avg_sales'),
+)
+```
+. . .
 
 ```{python}
-print(2)
+from great_tables import GT
 
+sales_data = pl.read_excel("data/sales.xlsx")
+sales_summary = sales_data.group_by('salesperson').agg(
+    pl.col('amount').sum().alias('total_sales'),
+    pl.col('amount').count().alias('num_sales'),
+    pl.col('amount').mean().alias('avg_sales'),
+)
+
+table = GT(sales_summary)
+display(table)
 ```
+
+## Eksempel: dataanalyse
