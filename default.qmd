@@ -1,0 +1,22 @@
+---
+title: "Fra null til koding"
+subtitle: "Programmering med Python"
+format: revealjs
+---
+
+## Python
+- Enkel syntaks
+- Allsidig
+  - Automatisering med scripts
+  - Dataanalyse med notebooks
+  - Programvare med pakker
+- Limspråk
+  - Gir tilgang til toppmoderne programvare
+
+## Eksempler
+### Automatisering
+
+```{python}
+print(2)
+
+```
