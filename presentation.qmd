@@ -1,7 +1,9 @@
 ---
 title: "Fra null til koding"
 subtitle: "Programmering med Python"
-format: revealjs
+format:
+    revealjs:
+        theme: moon
 ---
 
 ## Python
