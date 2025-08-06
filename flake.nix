@@ -28,6 +28,7 @@
               altair
               numpy
               pandas
+              great-tables
             ]
           );
         in
