@@ -1,5 +1,5 @@
 project:
   title: "default"
   type: website
-
-jupyter: course
+  render:
+    - presentation.qmd

@@ -41,12 +41,6 @@
               quarto
               glow
             ];
-            tasks = {
-              "bash:build-kernel" = {
-                exec = "${lib.getExe python} -m ipykernel install --user --name course";
-                after = [ "devenv:enterShell" ];
-              };
-            };
             env.QUARTO_PYTHON = lib.getExe python;
             enterShell = ''
               glow ${./README.md}
