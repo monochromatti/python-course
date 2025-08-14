@@ -20,31 +20,20 @@
           ...
         }:
         let
-          python = pkgs.python313.withPackages (
-            ps: with ps; [
-              jupyter
-              polars
-              matplotlib
-              altair
-              numpy
-              pandas
-              great-tables
-              xlsxwriter
-              fastexcel
-            ]
-          );
+          python = pkgs.python313;
         in
         {
           devenv.shells.default = {
             languages.python = {
               enable = true;
               package = python;
+              uv.enable = true;
             };
             packages = with pkgs; [
-              quarto
               glow
+              quarto
             ];
-            env.QUARTO_PYTHON = lib.getExe python;
+            env.UV_PYTHON = lib.getExe python;
             enterShell = ''
               glow ${./README.md}
             '';
