@@ -1,6 +1,5 @@
 ---
-title: "Fra null til koding"
-subtitle: "Programmering med Python"
+title: "Python-kurs"
 format:
     revealjs:
         theme: default
@@ -8,7 +7,9 @@ format:
         height: 800
 ---
 
-## Python
+# Introduksjon
+
+## Hvorfor Python?
 - Enkel syntaks
 - Allsidig
   - Automatisering med scripts
@@ -56,3 +57,329 @@ display(table)
 ```
 
 ## Eksempel: dataanalyse
+
+
+# Python concepts
+
+## Variables
+
+```{.python}
+navn = "mattias"
+alder = 30
+har_bil = False
+hobbyer = ["historie", "filosofi", "programmering", "piano"]
+
+mattias = {
+  "navn": "mattias",
+  "alder": 30,
+  "har_bil": False,
+  "hobbyer": ["historie", "filosofi", "programmering", "piano"]
+}
+```
+
+. . .
+
+**Annotations**
+```{.python}
+navn: str = "mattias"
+alder: int = 30
+har_bil: bool = False
+hobbyer: list = ["historie", "filosofi", "programmering", "piano"]
+
+mattias: dict = {"navn": "mattias", "alder": 30, "har_bil": False, "hobbyer": ["historie", "filosofi", "programmering", "piano"]}
+```
+
+
+## Operators (+, -)
+```{.python}
+# Floats
+a = 2
+b = 3.0
+c = a + b # 5.0
+
+# Lists
+frukt = ["eple", "banan"]
+grønnsaker = ["gulrot", "potet"]
+sunn_mat = frukt * grønnsaker # ["eple", "banan", "gulrot", "potet"]
+
+# Strings
+fornavn = "mattias"
+etternavn = "matthiesen"
+brukernavn = fornavn + etternavn # "mattiasmatthiesen"
+```
+
+
+## Operators (*, /)
+
+Man kan multiplisere mer enn bare *tall*
+
+```{python}
+#| echo: True
+#| code-line-numbers: false
+#| output-location: column-fragment
+2 * 3
+```
+
+. . .
+
+```{python}
+#| echo: True
+#| code-line-numbers: false
+#| output-location: column-fragment
+2 / 3
+```
+
+. . .
+
+```{python}
+#| echo: True
+#| code-line-numbers: false
+#| output-location: column-fragment
+["eple", "banan"] * 2
+```
+
+. . .
+
+```{python}
+#| echo: True
+#| code-line-numbers: false
+#| output-location: column-fragment
+"mattias" * 2
+```
+
+
+
+## Operators (<, >, ==)
+Man *sammenligner* med `<`, `>`, `<=`, `>=`, eller `==`
+
+```{python}
+#| echo: True
+#| code-line-numbers: false
+#| output-location: column-fragment
+2 < 3
+```
+
+. . .
+
+
+```{python}
+#| echo: True
+#| code-line-numbers: false
+#| output-location: column-fragment
+"mattias" == "Mattias"
+```
+
+. . .
+
+```{python}
+#| echo: True
+#| code-line-numbers: false
+#| output-location: column-fragment
+(2 < 3) == ("mattias" == "Mattias")
+```
+
+
+
+## Operators: Eksempel
+```{.python code-line-numbers="1,2|4|6|8"}
+mattias = {"navn": "mattias", "alder": 30, "hobbyer": ["historie", "piano"]}
+gunnar = {"navn": "gunnar", "alder": 31, "hobbyer": ["gitar"]}
+
+total_alder = mattias["alder"] + gunnar["alder"] # 61
+
+alle_hobbyer = mattias["hobbyer"] + gunnar["alder"] # ["historie", "piano", "gitar"]
+
+eldste_alder = max(mattias["alder"] + gunnar["alder"]) # 31
+```
+
+
+## Control flow: Loops and comprehensions
+
+```{python}
+#| echo: True
+#| code-echo: False
+personer = [
+  {"navn": "mattias", "alder": 30},
+  {"navn": "gunnar", "alder": 31},
+  {"navn": "trond", "alder": 31},
+]
+```
+
+. . .
+
+**Loop**
+```{python}
+#| echo: True
+#| code-echo: False
+total_alder = 0
+for person in personer:
+  total_alder = total_alder + person["alder"] 
+  # alternativ: total_alder += person["alder"]
+snittalder = total_alder / len(personer)
+snittalder
+```
+
+. . .
+
+**Comprehension**
+```{python}
+#| echo: True
+#| code-echo: False
+alle_aldre = [person["alder"] for person in personer]
+total_alder = sum(alle_aldre)
+total_alder
+```
+
+
+## Control flow: Conditions
+```{python}
+#| echo: True
+#| code-echo: False
+personer = [
+  {"navn": "mattias", "alder": 30},
+  {"navn": "gunnar", "alder": 31},
+  {"navn": "trond", "alder": 17},
+]
+```
+
+. . .
+
+**Loop**
+```{python}
+#| echo: True
+#| code-echo: False
+total_alder = 0
+for person in personer:
+  alder = person["alder"]
+  if alder > 18:
+    total_alder += person["alder"] 
+total_alder
+```
+
+. . .
+
+**Comprehension**
+```{python}
+#| echo: True
+#| code-echo: False
+alle_aldre = [person["alder"] for person in personer if person["alder"] > 18]
+snittalder = sum(alle_aldre) / len(alle_aldre)
+snittalder
+```
+
+
+## Control flow: Oppgave
+Finn det største tallet som er mindre enn 1593
+```{python}
+#| echo: True
+tall = [1111, 912, 1430, 2391, 1594]
+```
+
+. . .
+
+<br>
+
+:::: {.columns}
+
+::: {.column width="50%"}
+Ved bruk av *comprehension*,
+```{python}
+#| echo: True
+#| code-line-numbers: false
+svar = max([n for n in tall if n < 1593])
+svar
+```
+:::
+
+::: {.column width="50%"}
+Ved bruk av *loop*,
+```{python}
+#| echo: True
+#| code-line-numbers: false
+svar = 0
+for n in tall:
+  if n < 1593 and n >= svar:
+    svar = n
+svar
+```
+:::
+
+:::: 
+
+## Functions
+
+Funksjoner gjør kode *gjenbrukbar* og *generaliserbar*.
+
+```{python}
+#| echo: True
+#| code-line-numbers: false
+
+def find_conditional_largest(numbers, threshold):
+  return max([n for n in numbers if n < threshold])
+
+svar = find_conditional_largest(tall, 1593)
+svar
+```
+
+## Functions: Namespaces
+
+Variabler har **kontekstuell gyldighet**. Et variabelnavn er gyldig innen et *namespace*.
+
+<br>
+
+:::: {.columns}
+
+::: {.column width="33.33%"}
+```{python}
+#| echo: True
+#| output-location: fragment
+#| code-line-numbers: false
+divisor = 2
+
+def divide(number):
+  return number / divisor
+
+divide(10)
+```
+:::
+
+::: {.column width="33.33%"}
+```{python}
+#| echo: True
+#| output-location: fragment
+#| code-line-numbers: false
+divisor = 2
+
+def divide(number):
+  divisor = 5
+  return number / divisor
+
+divide(10)
+```
+:::
+
+::: {.column width="33.33%"}
+```{python}
+#| echo: True
+#| output-location: fragment
+#| code-line-numbers: false
+divisor = 2
+
+def divide(number, divisor):
+  return number / divisor
+
+divide(10, 5)
+```
+:::
+
+::::
+
+<br>
+**LEGB-regelen**: Local > enclosing > global > built-in
+
+## Classes
+
+## Errors
+- Hvordan lese dem?
+
+## Lese dokumentasjon
