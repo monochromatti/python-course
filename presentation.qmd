@@ -5,6 +5,7 @@ format:
         theme: default
         width: 1200
         height: 800
+code-annotations: hover
 ---
 
 # Introduksjon
@@ -23,14 +24,17 @@ format:
 import polars as pl
 from great_tables import GT, style, loc
 
-df = pl.read_excel("data/sales.xlsx")
-
-table = GT(df).tab_options(table_body_vlines_style="solid")
-display(table)
+table = GT(pl.read_excel("data/sales.xlsx")).tab_options(
+    table_body_vlines_style="solid",
+    table_width="100%",
+    table_font_size="16pt",
+    column_labels_font_weight="bold",
+)
+table.show()
 ```
 
 ##
-```{.python code-line-numbers="1|3|4-8"}
+```{.python code-line-numbers="1|3|4-8|9"}
 import polars as pl
 
 sales_data = pl.read_excel("sales.xlsx")
@@ -39,21 +43,23 @@ sales_summary = sales_data.group_by('salesperson').agg(
     pl.col('amount').count().alias('num_sales'),
     pl.col('amount').mean().alias('avg_sales'),
 )
+sales_summary
 ```
+
 . . .
 
 ```{python}
 from great_tables import GT
 
 sales_data = pl.read_excel("data/sales.xlsx")
-sales_summary = sales_data.group_by('salesperson').agg(
+sales_summary = sales_data.group_by('product').agg(
     pl.col('amount').sum().alias('total_sales'),
-    pl.col('amount').count().alias('num_sales'),
-    pl.col('amount').mean().alias('avg_sales'),
 )
-
-table = GT(sales_summary)
-display(table)
+GT(sales_summary).tab_options(
+    table_width="50%",
+    table_font_size="16pt",
+    column_labels_font_weight="bold",
+).show()
 ```
 
 ## Eksempel: dataanalyse
@@ -90,7 +96,7 @@ mattias: dict = {"navn": "mattias", "alder": 30, "har_bil": False, "hobbyer": ["
 ```
 
 
-## Operators (+, -)
+## Operators: Addition
 ```{.python}
 # Floats
 a = 2
@@ -109,7 +115,7 @@ brukernavn = fornavn + etternavn # "mattiasmatthiesen"
 ```
 
 
-## Operators (*, /)
+## Operators: Multiplication
 
 Man kan multiplisere mer enn bare *tall*
 
@@ -148,9 +154,15 @@ Man kan multiplisere mer enn bare *tall*
 ```
 
 
+## Operators: Comparison
+Man *sammenligner* med
 
-## Operators (<, >, ==)
-Man *sammenligner* med `<`, `>`, `<=`, `>=`, eller `==`
+<div style="background-color: rgb(240,240,240);">
+<center>`<` &emsp; `<=` &emsp; `>` &emsp; `>=` &emsp; `==`</center>
+</div>
+<br>
+
+. . .
 
 ```{python}
 #| echo: True
@@ -179,17 +191,41 @@ Man *sammenligner* med `<`, `>`, `<=`, `>=`, eller `==`
 ```
 
 
-
 ## Operators: Eksempel
-```{.python code-line-numbers="1,2|4|6|8"}
+```{python}
+#| echo: True
+#| code-echo: False
 mattias = {"navn": "mattias", "alder": 30, "hobbyer": ["historie", "piano"]}
 gunnar = {"navn": "gunnar", "alder": 31, "hobbyer": ["gitar"]}
+```
 
-total_alder = mattias["alder"] + gunnar["alder"] # 61
+. . .
 
-alle_hobbyer = mattias["hobbyer"] + gunnar["alder"] # ["historie", "piano", "gitar"]
+<br>
 
-eldste_alder = max(mattias["alder"] + gunnar["alder"]) # 31
+```{python}
+#| echo: True
+#| code-echo: False
+#| output-location: fragment
+mattias["alder"] + gunnar["alder"]
+```
+
+<br>
+
+```{python}
+#| echo: True
+#| code-echo: False
+#| output-location: fragment
+mattias["hobbyer"] + gunnar["hobbyer"]
+```
+
+<br>
+
+```{python}
+#| echo: True
+#| code-echo: False
+#| output-location: fragment
+max([mattias["alder"], gunnar["alder"]]) # 31
 ```
 
 
@@ -213,7 +249,7 @@ personer = [
 #| code-echo: False
 total_alder = 0
 for person in personer:
-  total_alder = total_alder + person["alder"] 
+  total_alder = total_alder + person["alder"]
   # alternativ: total_alder += person["alder"]
 snittalder = total_alder / len(personer)
 snittalder
@@ -252,7 +288,7 @@ total_alder = 0
 for person in personer:
   alder = person["alder"]
   if alder > 18:
-    total_alder += person["alder"] 
+    total_alder += person["alder"]
 total_alder
 ```
 
@@ -304,7 +340,7 @@ svar
 ```
 :::
 
-:::: 
+::::
 
 ## Functions
 
@@ -378,8 +414,61 @@ divide(10, 5)
 **LEGB-regelen**: Local > enclosing > global > built-in
 
 ## Classes
+- Brukes mest av *package*-forfattere, for å gjøre det lettere å *bruke* deres kode (e.g. `pandas.DataFrame`).
+- Brukes for å *samle* relatert kode som skal brukes flere ganger i samme program.
 
-## Errors
-- Hvordan lese dem?
+. . .
+
+## Classes: Define
+
+```{python}
+class Person:
+    def __init__(self, name, age, hobbies):
+        self.name = name
+        self.age = age
+        self.hobbies = hobbies
+
+    def likes_books(self):
+        if "books" in self.hobbies:
+            return True
+        return False
+```
+
+```{.python code-line-numbers="1|2|3-5|7-10"}
+class Person: # <1>
+    def __init__(self, name, age, hobbies): # <2>
+        self.name = name
+        self.age = age
+        self.hobbies = hobbies
+
+    def likes_books(self):
+        if "books" in self.hobbies:
+            return True
+        return False
+```
+
+1. En `class`-definisjon er en *oppskrift* på hvordan man lager klasse-*instanser*.
+2. En *special method* som spesifiserer hvordan en instans skal konstrueres.
+
+## Classes: Create instances
+```{python}
+#| echo: True
+persons = [
+    Person(name="mattias", age=30, hobbies=["books", "football"]),
+    Person(name="gunnar", age=31, hobbies=[]),
+]
+```
+
+. . .
+
+```{python}
+#| echo: True
+#| output-location: fragment
+for person in persons:
+    if person.likes_books():
+        print(person.name + " likes books")
+```
 
 ## Lese dokumentasjon
+
+- [Python Package Index (PyPI)](https://pypi.org/): Hvor python-pakker publiseres
