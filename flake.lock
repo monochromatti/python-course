@@ -226,11 +226,44 @@
         "type": "github"
       }
     },
+    "nixpkgs_2": {
+      "locked": {
+        "lastModified": 1749494155,
+        "narHash": "sha256-FG4DEYBpROupu758beabUk9lhrblSf5hnv84v1TLqMc=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "88331c17ba434359491e8d5889cce872464052c2",
+        "type": "github"
+      },
+      "original": {
+        "id": "nixpkgs",
+        "type": "indirect"
+      }
+    },
     "root": {
       "inputs": {
         "devenv": "devenv",
         "flake-parts": "flake-parts_2",
-        "nixpkgs": "nixpkgs"
+        "nixpkgs": "nixpkgs",
+        "utgard": "utgard"
+      }
+    },
+    "utgard": {
+      "inputs": {
+        "nixpkgs": "nixpkgs_2"
+      },
+      "locked": {
+        "lastModified": 1753776173,
+        "narHash": "sha256-3y8U4HQwyj+7kn+7BLhZbuN0nOpwEemg3T59Fquiw8c=",
+        "owner": "fornybar",
+        "repo": "utgard",
+        "rev": "ead574758589df2b4edb89b975395e5194f5be09",
+        "type": "github"
+      },
+      "original": {
+        "owner": "fornybar",
+        "repo": "utgard",
+        "type": "github"
       }
     }
   },

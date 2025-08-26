@@ -5,6 +5,7 @@
       url = "github:cachix/devenv";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    utgard.url = "github:fornybar/utgard";
   };
   outputs =
     inputs@{ flake-parts, nixpkgs, ... }:
@@ -15,25 +16,41 @@
       systems = nixpkgs.lib.systems.flakeExposed;
       perSystem =
         {
-          pkgs,
+          system,
           lib,
           ...
         }:
         let
-          python = pkgs.python313;
+          pkgs = import nixpkgs {
+            inherit system;
+            overlays = [ inputs.utgard.overlays.jupyterlab-extensions ];
+          };
+          python = pkgs.python313.withPackages (
+            ps: with ps; [
+              jupyter
+              jupytext
+              altair
+              polars
+              great-tables
+              fastexcel
+              xlsxwriter
+              jupyterlab-extensions.quarto
+            ]
+          );
         in
         {
           devenv.shells.default = {
             languages.python = {
               enable = true;
               package = python;
-              uv.enable = true;
             };
             packages = with pkgs; [
               glow
               quarto
+              jupyter
             ];
-            env.UV_PYTHON = lib.getExe python;
+            env.QUARTO_PYTHON = lib.getExe python;
+            env.VIRTUAL_ENV = python;
             enterShell = ''
               glow ${./README.md}
             '';

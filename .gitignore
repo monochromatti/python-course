@@ -2,3 +2,4 @@
 .devenv/
 .quarto/
 _site/
+/.quarto/
